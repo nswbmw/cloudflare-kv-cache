@@ -17,16 +17,16 @@ export function CloudflareKVCache (options = {}) {
     const opts = Object.assign({}, options, fnOptions)
 
     const binding = opts.binding || 'KV'
-    const prefix = typeof opts.prefix === 'string' ? opts.prefix : ''
+    const prefix = opts.prefix || ''
     const ttl = opts.ttl
     const keyGenerator = opts.key || fn.name
     const getter = typeof opts.get === 'function' ? opts.get : defaultGet
     const setter = typeof opts.set === 'function' ? opts.set : defaultSet
 
-    assert(typeof binding === 'string' && binding.length > 0, 'binding must be a non-empty string (KV binding name)')
-    assert(typeof prefix === 'string', 'prefix must be a string')
+    assert(typeof binding === 'string' && binding.length > 0, '`binding` must be a non-empty string (KV binding name)')
+    assert(typeof prefix === 'string', '`prefix` must be a string')
     assert(keyGenerator && ((typeof keyGenerator === 'string') || (typeof keyGenerator === 'function')), '`key` must be string or function!')
-    assert(Number.isFinite(ttl) && ttl >= 60, 'ttl must be a number of seconds >= 60')
+    assert(Number.isFinite(ttl) && ttl >= 60, '`ttl` must be a number of seconds >= 60')
 
     // Lazy resolve KV from Cloudflare runtime by binding name
     let runtimeCache = null
@@ -45,7 +45,7 @@ export function CloudflareKVCache (options = {}) {
       }
       const key = await keyGenerator.apply(fn, args)
       if (key === false) return false
-      assert(typeof key === 'string', 'key function must return a string or false')
+      assert(typeof key === 'string', '`key` function must return a string or false')
       return prefix + key
     }
 
@@ -78,6 +78,7 @@ export function CloudflareKVCache (options = {}) {
     }
 
     async function set (...argsAndValue) {
+      assert(argsAndValue.length >= 1, 'set requires at least one argument (value)')
       const value = argsAndValue[argsAndValue.length - 1]
       const args = argsAndValue.slice(0, -1)
       const cacheKey = await computeKey(args)

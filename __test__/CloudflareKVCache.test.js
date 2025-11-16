@@ -57,15 +57,17 @@ describe('CloudflareKVCache', () => {
     expect(result).toBe('test')
   })
 
-  it('validates ttl, binding, and key; prefix non-string falls back to empty', async () => {
+  it('validates ttl, binding, key, and prefix must be string', async () => {
     const factory = CloudflareKVCache({ ttl: 60 })
     expect(() => factory(() => 1, { ttl: 59 })).toThrow(TypeError)
     expect(() => factory(() => 1, { binding: '' })).toThrow(TypeError)
     expect(() => factory(() => 1, { key: 123 })).toThrow(TypeError)
-    // prefix number -> treated as '' and not thrown
-    const cache = factory(async () => 'ok', { prefix: 123, key: 'fixed' })
+    // prefix must be string, non-string throws
+    expect(() => factory(() => 1, { prefix: 123, key: 'fixed' })).toThrow(TypeError)
+    // valid prefix string works
+    const cache = factory(async () => 'ok', { prefix: 'p:', key: 'fixed' })
     await cache()
-    expect(KV.putCalls[0].key).toBe('fixed')
+    expect(KV.putCalls[0].key).toBe('p:fixed')
   })
 
   it('throws when ttl is missing (undefined)', async () => {
