@@ -1,17 +1,17 @@
 {
   "name": "cloudflare-kv-cache",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Cloudflare KV–based cache wrapper for function results.",
-  "main": "./dist/cjs/CloudflareKVCache.js",
+  "main": "./dist/cjs/CloudflareKVCache.cjs",
   "type": "module",
-  "module": "./dist/esm/CloudflareKVCache.js",
+  "module": "./dist/esm/CloudflareKVCache.mjs",
   "types": "./types/CloudflareKVCache.d.ts",
   "exports": {
     ".": {
       "types": "./types/CloudflareKVCache.d.ts",
-      "import": "./dist/esm/CloudflareKVCache.js",
-      "require": "./dist/cjs/CloudflareKVCache.js",
-      "default": "./dist/esm/CloudflareKVCache.js"
+      "import": "./dist/esm/CloudflareKVCache.mjs",
+      "require": "./dist/cjs/CloudflareKVCache.cjs",
+      "default": "./dist/esm/CloudflareKVCache.mjs"
     }
   },
   "files": [
@@ -22,7 +22,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "build": "tsup",
+    "build": "tsdown",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "prepublishOnly": "npm run lint && npm run test && npm run build",
     "prepare": "husky",
@@ -41,15 +41,15 @@
     "function"
   ],
   "devDependencies": {
-    "@commitlint/cli": "20.1.0",
-    "@commitlint/config-conventional": "20.0.0",
-    "eslint": "9.39.1",
-    "globals": "16.5.0",
+    "@commitlint/cli": "20.4.1",
+    "@commitlint/config-conventional": "20.4.1",
+    "eslint": "9.39.2",
+    "globals": "17.3.0",
     "husky": "9.1.7",
     "jest": "30.2.0",
     "neostandard": "0.12.2",
-    "tsup": "8.5.1",
-    "wrangler": "4.47.0"
+    "tsdown": "^0.21.1",
+    "wrangler": "~4.49.0"
   },
   "engines": {
     "node": ">=20"
