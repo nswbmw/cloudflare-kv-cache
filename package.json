@@ -1,6 +1,6 @@
 {
   "name": "cloudflare-kv-cache",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cloudflare KV–based cache wrapper for function results.",
   "main": "./dist/cjs/CloudflareKVCache.cjs",
   "type": "module",

@@ -1,3 +1,7 @@
+## v1.0.3 / 2026-06-22
+
+- fix: keyGenerator typo
+
 ## v1.0.2 / 2026-03-10
 
 - refactor: use tsdown instead of tsup
